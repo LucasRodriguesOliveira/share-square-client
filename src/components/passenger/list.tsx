@@ -43,6 +43,7 @@ export const PassengerList: FC<PassengerListProps> = ({
               passenger={passenger}
               key={passenger._id}
               onTimeout={() => {
+                handleClearSelectionClick();
                 onTimeout(passenger._id);
               }}
             />

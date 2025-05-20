@@ -21,7 +21,12 @@ export async function SuperFetch<T, U>({
   token,
   onError,
 }: SuperFetchProps<U>): Promise<Result<T>> {
-  let headers: HeadersInit = Object.assign({}, baseHeaders);
+  let headers: HeadersInit = Object.assign(
+    {
+      'ngrok-skip-browser-warning': true,
+    },
+    baseHeaders
+  );
 
   if (token) {
     headers = {
@@ -71,7 +76,9 @@ export async function SuperFetchFormData<T>({
   data,
   token,
 }: SuperFetchFormDataProps): Promise<Result<T>> {
-  let headers: HeadersInit = {};
+  let headers: HeadersInit = {
+    'ngrok-skip-browser-warning': '1',
+  };
 
   if (token) {
     headers = {

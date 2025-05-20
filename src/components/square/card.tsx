@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Separator,
+  Show,
   Stack,
 } from '@chakra-ui/react';
 import { LuMapPin, LuUpload } from 'react-icons/lu';
@@ -14,6 +15,7 @@ import { PassengerList } from '../passenger/list';
 import { Passenger } from '../../model/passenger.model';
 import { Square } from '../../model/square.model';
 import UploadFileModal from '../modal/upload-file.modal';
+import { EmptyPassengerList } from './empty-list';
 
 interface SquareDetailsCardProps {
   square: Square;
@@ -26,15 +28,18 @@ export const SquareDetailsCard: FC<SquareDetailsCardProps> = ({
 }) => {
   const [passengerList, setPassengerList] = useState(passengers);
 
-  const handleTimeout = useCallback((passengerId: string) => {
-    const passengerIndex = passengerList.findIndex((passenger) => {
-      return passenger._id === passengerId;
-    })
+  const handleTimeout = useCallback(
+    (passengerId: string) => {
+      const passengerIndex = passengerList.findIndex((passenger) => {
+        return passenger._id === passengerId;
+      });
 
-    const newPassengerList = passengerList.splice(passengerIndex, 1);
+      const newPassengerList = passengerList.splice(passengerIndex, 1);
 
-    setPassengerList(newPassengerList);
-  }, [passengerList]);
+      setPassengerList(newPassengerList);
+    },
+    [passengerList]
+  );
 
   return (
     <Card.Root
@@ -65,8 +70,10 @@ export const SquareDetailsCard: FC<SquareDetailsCardProps> = ({
             </Button>
           </UploadFileModal>
         </Stack>
-        <Heading color={'fg.muted'}>All the passengers for this bus</Heading>
-        <PassengerList passengers={passengers} onTimeout={handleTimeout} />
+        <Show when={passengers.length > 0} fallback={<EmptyPassengerList />}>
+          <Heading color={'fg.muted'}>All the passengers for this bus</Heading>
+          <PassengerList passengers={passengers} onTimeout={handleTimeout} />
+        </Show>
       </Card.Body>
     </Card.Root>
   );

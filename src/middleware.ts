@@ -6,9 +6,9 @@ export function middleware(request: NextRequest) {
   const publicPages = ['/connect'];
   const isHomePage = request.nextUrl.pathname === '/';
 
-  const isPublicPage = publicPages.some((page) =>
-    request.nextUrl.pathname.startsWith(page)
-  ) || isHomePage;
+  const isPublicPage =
+    publicPages.some((page) => request.nextUrl.pathname.startsWith(page)) ||
+    isHomePage;
 
   if (!squareId && !isPublicPage) {
     return NextResponse.redirect(new URL('/connect', request.nextUrl));

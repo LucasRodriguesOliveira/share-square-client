@@ -1,8 +1,7 @@
 'use client';
 
-import { ProgressCircle } from '@chakra-ui/react';
+import { Progress } from '@chakra-ui/react';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { LuHourglass, LuTrash2 } from 'react-icons/lu';
 
 interface PassengerDueTimeProgressProps {
   createdAt: Date;
@@ -45,16 +44,15 @@ export const PassengerDueTimeProgress: FC<PassengerDueTimeProgressProps> = ({
   }, [progress, onProgressFinished, createdAt, dueDate]);
 
   return (
-    <ProgressCircle.Root
+    <Progress.Root
       size={'sm'}
       strokeLinecap={'round'}
       colorPalette={'red'}
       value={progress}
     >
-      <ProgressCircle.Circle>
-        <ProgressCircle.Track />
-        <ProgressCircle.Range />
-      </ProgressCircle.Circle>
-    </ProgressCircle.Root>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
   );
 };
